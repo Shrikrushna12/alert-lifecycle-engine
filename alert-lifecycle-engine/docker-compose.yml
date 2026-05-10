@@ -14,7 +14,7 @@ services:
   log-service:
     build:
       context: .
-      dockerfile: Dockerfile.log
+      dockerfile: ./Dockerfile.log
     depends_on:
       - postgres
     ports:
@@ -23,7 +23,7 @@ services:
   alert-service:
     build:
       context: .
-      dockerfile: Dockerfile.alert
+      dockerfile: ./Dockerfile.alert
     depends_on:
       - postgres
       - log-service
@@ -33,7 +33,7 @@ services:
   escalation-service:
     build:
       context: .
-      dockerfile: Dockerfile.escalation
+      dockerfile: ./Dockerfile.escalation
     depends_on:
       - postgres
       - log-service
