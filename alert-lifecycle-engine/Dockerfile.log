@@ -1,0 +1,11 @@
+FROM golang:1.24.6 AS builder
+WORKDIR /app
+COPY . .
+RUN go mod tidy
+RUN go build -o log-service ./cmd/log-service
+
+FROM debian:bookworm-slim
+WORKDIR /app
+COPY --from=builder /app/log-service .
+EXPOSE 8081
+CMD ["./log-service"]

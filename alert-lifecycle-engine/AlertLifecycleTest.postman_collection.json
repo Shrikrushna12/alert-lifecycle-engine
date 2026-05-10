@@ -1,0 +1,217 @@
+{
+  "info": {
+    "name": "Alert Lifecycle Engine Test Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Test collection for alert-lifecycle-engine project"
+  },
+  "item": [
+    {
+      "name": "Send DEVICE_DOWN for device d1",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"tenant_id\":\"t1\",\"device_id\":\"d1\",\"event_type\":\"DEVICE_DOWN\",\"timestamp\":1640995200,\"event_id\":\"e1\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/alerts/events",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["alerts", "events"]
+        }
+      }
+    },
+    {
+      "name": "Send DEVICE_DOWN for device d2",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"tenant_id\":\"t1\",\"device_id\":\"d2\",\"event_type\":\"DEVICE_DOWN\",\"timestamp\":1640995200,\"event_id\":\"e2\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/alerts/events",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["alerts", "events"]
+        }
+      }
+    },
+    {
+      "name": "Send duplicate event for d1",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"tenant_id\":\"t1\",\"device_id\":\"d1\",\"event_type\":\"DEVICE_DOWN\",\"timestamp\":1640995200,\"event_id\":\"e1\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/alerts/events",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["alerts", "events"]
+        }
+      }
+    },
+    {
+      "name": "Send DEVICE_UP for d1 (resolve alert)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"tenant_id\":\"t1\",\"device_id\":\"d1\",\"event_type\":\"DEVICE_UP\",\"timestamp\":1640995300,\"event_id\":\"e3\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/alerts/events",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["alerts", "events"]
+        }
+      }
+    },
+    {
+      "name": "Send DEVICE_UP for d3 (out-of-order, UP before DOWN)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"tenant_id\":\"t1\",\"device_id\":\"d3\",\"event_type\":\"DEVICE_UP\",\"timestamp\":1640995400,\"event_id\":\"e4\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/alerts/events",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["alerts", "events"]
+        }
+      }
+    },
+    {
+      "name": "Send DEVICE_DOWN for d3 (reactivate after UP)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"tenant_id\":\"t1\",\"device_id\":\"d3\",\"event_type\":\"DEVICE_DOWN\",\"timestamp\":1640995500,\"event_id\":\"e5\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/alerts/events",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["alerts", "events"]
+        }
+      }
+    },
+    {
+      "name": "Trigger manual escalation",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/escalate",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["escalate"]
+        }
+      }
+    },
+    {
+      "name": "Get all logs",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/logs",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["logs"]
+        }
+      }
+    },
+    {
+      "name": "Get logs for device d1",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/logs/d1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["logs", "d1"]
+        }
+      }
+    },
+    {
+      "name": "Get logs for device d2",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/logs/d2",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["logs", "d2"]
+        }
+      }
+    },
+    {
+      "name": "Get logs for device d3",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/logs/d3",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["logs", "d3"]
+        }
+      }
+    }
+  ]
+}

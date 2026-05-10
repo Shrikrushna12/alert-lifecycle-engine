@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: alertsdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  log-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.log
+    depends_on:
+      - postgres
+    ports:
+      - "8081:8081"
+
+  alert-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.alert
+    depends_on:
+      - postgres
+      - log-service
+    ports:
+      - "8080:8080"
+
+  escalation-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.escalation
+    depends_on:
+      - postgres
+      - log-service
+    ports:
+      - "8082:8082"
+
+volumes:
+  pgdata: {}

@@ -1,0 +1,11 @@
+FROM golang:1.24.6 AS builder
+WORKDIR /app
+COPY . .
+RUN go mod tidy
+RUN go build -o escalation-service ./cmd/escalation-service
+
+FROM debian:bookworm-slim
+WORKDIR /app
+COPY --from=builder /app/escalation-service .
+EXPOSE 8082
+CMD ["./escalation-service"]
